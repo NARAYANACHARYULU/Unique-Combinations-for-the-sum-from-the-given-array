@@ -1,0 +1,48 @@
+package com.company;
+import java.util.*;
+class Graph {
+    public static List<List<Integer>> combinationSum(int[] arr,int k)
+    {
+        List<List<Integer>> sum=new ArrayList<>();
+        if(arr==null || arr.length==0)
+        {
+            return sum;
+        }
+        Arrays.sort(arr);
+        List<Integer> combination=new ArrayList<>();
+        findCombinations(sum,combination,arr,k,0);
+        return sum;
+    }
+    public static void findCombinations(List<List<Integer>> sum,List<Integer> combination,int[] arr,int k,int start)
+    {
+        if(k==0)
+        {
+            sum.add(new ArrayList<>(combination));
+            return;
+        }
+        for(int i=start;i<arr.length;i++)
+        {
+            if(arr[i]>k)
+            {
+                break;
+            }
+            combination.add(arr[i]);
+            findCombinations(sum,combination,arr,k-arr[i],i);
+            combination.remove(combination.size()-1);
+        }
+
+    }
+    public static void main(String[] args) {
+        int[] arr={2,3,5,7};
+        int k=7;
+        List<List<Integer>> list=combinationSum(arr,k);
+        for(int i=0;i<list.size();i++)
+        {
+            for(int p:list.get(i))
+            {
+                System.out.print(p+" ");
+            }
+            System.out.println();
+        }
+    }
+}
